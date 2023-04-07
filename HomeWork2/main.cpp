@@ -70,9 +70,6 @@ double calculate_result(char operation, double first_operand, double second_oper
 			index++;
 		}
 		break;
-	case '!':
-		result = factorial(first_operand);
-		break;
 	default:
 		result = 0;
 		break;
