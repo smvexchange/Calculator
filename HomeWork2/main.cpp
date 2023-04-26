@@ -1,97 +1,42 @@
 #include <iostream>
+#include "calculate.h"
 
 using namespace std;
 
-char input_operation()
-{	
-	char operation;
-	cout << "Please, enter one of this operations: '+', '-', '*', '/', '!', '^'.\nIf you want to quit, please, enter 'q':" << endl;
-	while (true)
-	{
-		cin >> operation;
-		if (operation == 'q' 
-			|| operation == '+' 
-			|| operation == '-' 
-			|| operation == '*' 
-			|| operation == '/' 
-			|| operation == '!' 
-			|| operation == '^')
-		{
-			break;
-		}
-		cout << "Unknown operation. Try input operation again:" << endl;
-	}
-	return operation;
-}
-
-double input_operand()
-{
-	double operand;
-	cout << "Please, enter the number:" << endl;
-	cin >> operand;
-	return operand;
-}
-
-int factorial(int operand)
-{	
-	int index = 1;
-	int result = 1;
-	while (index < operand)
-	{
-		result *= ++index;
-	}
-	return result;
-}
-
-double calculate_result(char operation, double first_operand, double second_operand)
-{
-	double result;
-	int index;
-	switch (operation)
-	{
-	case '+':
-		result = first_operand + second_operand;
-		break;
-	case '-':
-		result = first_operand - second_operand;
-		break;
-	case '*':
-		result = first_operand * second_operand;
-		break;
-	case '/':
-		result = first_operand / second_operand;
-		break;
-	case '^':
-		result = 1;
-		index = 0;
-		while (index < second_operand)
-		{
-			result *= first_operand;
-			index++;
-		}
-		break;
-	default:
-		result = 0;
-		break;
-	}
-	return result;
-}
-
 int main()
 {
-	cout << "Calculator v1.0" << endl;
+	cout << "Calculator v2.0" << endl;
 	while (true)
-	{
+	{	
+		double first_operand;
+		double second_operand;
+		double dividend;
+		double divisor;
+		int operand;
+		int power;
 		char operation = input_operation();
-		if (operation == 'q')
+		switch (operation)
 		{
+		case 'q':
 			cout << "Goodbye!" << endl;
+			return 0;
+		case '+':
+			first_operand = input_operand();
+			second_operand = input_operand();
+			cout << "Result is " << calculate_sum(first_operand, second_operand) << "." << endl;
 			break;
-		}
-		else if (operation == '/')
-		{
-			int dividend = input_operand();
-			int divisor;
+		case '-':
+			first_operand = input_operand();
+			second_operand = input_operand();
+			cout << "Result is " << calculate_sub(first_operand, second_operand) << "." << endl;
+			break;
+		case '*':
+			first_operand = input_operand();
+			second_operand = input_operand();
+			cout << "Result is " << calculate_multi(first_operand, second_operand) << "." << endl;
+			break;
+		case '/':
+			dividend = input_operand();
 			while (true)
 			{
 				divisor = input_operand();
@@ -101,18 +46,21 @@ int main()
 				}
 				cout << "The divisor cannot be zero. Try input another number." << endl;
 			}
-			cout << "Result is " << calculate_result(operation, dividend, divisor) << endl;
-		}
-		else if (operation == '!')
-		{
-			cout << "Result is " << factorial(input_operand()) << "." << endl;
-		}
-		else
-		{
-			int first_operand = input_operand();
-			int second_operand = input_operand();
-			cout << "Result is " << calculate_result(operation, first_operand, second_operand) << endl;
+			cout << "Result is " << calculate_division(dividend, divisor) << "." << endl;
+			break;
+		case '!':
+			operand = input_operand();
+			cout << "Result is " << calculate_factorial(operand) << "." << endl;
+			break;
+		case '^':
+			operand = input_operand();
+			power = input_operand();
+			cout << "Result is " << calculate_power(operand, power) << "." << endl;
+			break;
+		default:
+			break;
 		}
 		cout << "-------------------------------------------------------------------" << endl;
 	}
+	return 0;
 }
